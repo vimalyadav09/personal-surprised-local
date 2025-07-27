@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
-// ✅ Firebase config
+// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyCgeS0Qo-2K1RQ2his1lwhgSfVtIMlCfZw",
   authDomain: "personalised-surprise.firebaseapp.com",
@@ -14,7 +14,7 @@ const firebaseConfig = {
   measurementId: "G-64EDC5QHJT"
 };
 
-// ✅ Navigation handlers
+// Navigation
 document.getElementById("add").addEventListener("click", () => {
   window.location.href = "add.html";
 });
@@ -25,17 +25,17 @@ document.getElementById("order").addEventListener("click", () => {
   window.location.href = "order.html";
 });
 
-// ✅ Initialize Firebase
+// Firebase init
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// ✅ DOM container
+// DOM container
 const productsContainer = document.querySelector(".products");
 
-// ✅ Reference to DB path
+// DB ref
 const productRef = ref(db, "Personalised Surprise/products");
 
-// ✅ Fetch and display
+// Fetch and display
 onValue(productRef, (snapshot) => {
   productsContainer.innerHTML = "";
 
@@ -43,60 +43,21 @@ onValue(productRef, (snapshot) => {
     const categoryName = categorySnap.key;
     const categoryData = categorySnap.val();
 
-    // Add category title to .products
+    // Category heading
     const categoryHeading = document.createElement("h2");
     categoryHeading.textContent = categoryName;
     productsContainer.appendChild(categoryHeading);
 
-    const listWrapper = document.createElement("div");
-    listWrapper.style.position = "relative";
-    listWrapper.style.marginBottom = "30px";
-
+    // List container
     const listDiv = document.createElement("div");
     listDiv.className = "list";
     listDiv.style.display = "flex";
     listDiv.style.overflowX = "auto";
     listDiv.style.scrollBehavior = "smooth";
     listDiv.style.gap = "20px";
-    listDiv.style.padding = "10px 40px"; // space for buttons
+    listDiv.style.padding = "10px 0";
 
-    // Left scroll button
-    const leftBtn = document.createElement("button");
-    leftBtn.innerHTML = "&#10094;";
-    leftBtn.style.position = "absolute";
-    leftBtn.style.left = "0";
-    leftBtn.style.top = "50%";
-    leftBtn.style.transform = "translateY(-50%)";
-    leftBtn.style.zIndex = "10";
-    leftBtn.style.fontSize = "24px";
-    leftBtn.style.background = "white";
-    leftBtn.style.border = "1px solid #ccc";
-    leftBtn.style.borderRadius = "50%";
-    leftBtn.style.cursor = "pointer";
-
-    // Right scroll button
-    const rightBtn = document.createElement("button");
-    rightBtn.innerHTML = "&#10095;";
-    rightBtn.style.position = "absolute";
-    rightBtn.style.right = "0";
-    rightBtn.style.top = "50%";
-    rightBtn.style.transform = "translateY(-50%)";
-    rightBtn.style.zIndex = "10";
-    rightBtn.style.fontSize = "24px";
-    rightBtn.style.background = "white";
-    rightBtn.style.border = "1px solid #ccc";
-    rightBtn.style.borderRadius = "50%";
-    rightBtn.style.cursor = "pointer";
-
-    leftBtn.addEventListener("click", () => {
-      listDiv.scrollBy({ left: -300, behavior: "smooth" });
-    });
-
-    rightBtn.addEventListener("click", () => {
-      listDiv.scrollBy({ left: 300, behavior: "smooth" });
-    });
-
-    // Loop over products
+    // Products
     for (let productName in categoryData) {
       const product = categoryData[productName];
       const productDiv = document.createElement("div");
@@ -110,7 +71,7 @@ onValue(productRef, (snapshot) => {
       productDiv.style.cursor = "pointer";
       productDiv.style.background = "#fff";
 
-      // Images on top
+      // Image
       if (product.images && Array.isArray(product.images)) {
         const imageContainer = document.createElement("div");
         const imgWrapper = document.createElement("div");
@@ -120,7 +81,7 @@ onValue(productRef, (snapshot) => {
         imgWrapper.style.borderRadius = "10px";
 
         const img = document.createElement("img");
-        img.src = product.images[0]; // Show only first image
+        img.src = product.images[0];
         img.style.width = "100%";
         img.style.height = "100%";
         img.style.objectFit = "cover";
@@ -146,9 +107,6 @@ onValue(productRef, (snapshot) => {
       listDiv.appendChild(productDiv);
     }
 
-    listWrapper.appendChild(leftBtn);
-    listWrapper.appendChild(rightBtn);
-    listWrapper.appendChild(listDiv);
-    productsContainer.appendChild(listWrapper);
+    productsContainer.appendChild(listDiv);
   });
 });
