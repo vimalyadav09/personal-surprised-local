@@ -1,0 +1,106 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.product-details {
+  padding: 20px;
+  margin: 30px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.product-details h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  color: #222;
+  text-align: center;
+}
+
+.product-details p {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+textarea {
+  width: 100%;
+  max-width: 350px;
+  height: 40px;
+  padding: 10px;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  resize: vertical;
+  background-color: #fff;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 10px 5px 0 0;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#save {
+  background-color: #4CAF50;
+  color: white;
+}
+
+#save:hover {
+  background-color: #45a049;
+}
+
+#delete {
+  background-color: #e53935;
+  color: white;
+}
+
+#delete:hover {
+  background-color: #c62828;
+}
+
+#discount:hover {
+  background-color: #fb8c00;
+}
+
+img {
+  width: 200px;
+  border-radius: 10px;
+  margin: 10px 10px 0 0;
+  object-fit: cover;
+}
+
+.bottom{
+    position: fixed;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    bottom: 0;
+    padding-bottom: 10px;
+    padding-top: 15px;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+    background-color: white;
+}
+
+.bottom .button{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.bottom .button i{
+    font-size: 20px;
+}
+
+.bottom .button p{
+    margin: 0;
+    margin-top: 10px;
+}
