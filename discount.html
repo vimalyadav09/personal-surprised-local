@@ -1,42 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="index.css">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Discount Manager</title>
+
+  <link rel="stylesheet" href="discount.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 </head>
 <body>
-    <div class="main">
-        <div class="header">
-            <img src="logo.jpg" alt="" height="70px">
-            <i class="fa-solid fa-circle-user"></i>
-        </div>
-        <div class="search-bar">
-            <input type="text" placeholder="search here">
-            <i class="fa-solid fa-magnifying-glass"></i>
-        </div>
-        <div class="products"></div>
+
+<header class="admin-header">
+  <div class="header-inner">
+    <div class="brand">
+      <img src="logo.jpg" />
+      <span>Admin Panel</span>
     </div>
-    <div class="bottom">
-        <div class="button" id="home">
-            <i class="fa-solid fa-house"></i>
-            <p>Home</p>
-        </div>
-        <div class="button" id="add">
-            <i class="fa-solid fa-plus"></i>
-            <p>Add</p>
-        </div>
-        <div class="button" id="discount">
-            <i class="fa-solid fa-tag"></i>
-            <p>Discount</p>
-        </div>
-        <div class="button" id="order">
-            <i class="fa-solid fa-cart-shopping"></i>
-            <p>Order</p>
-        </div>
+    <div class="profile"><i class="fa-solid fa-user"></i></div>
+  </div>
+</header>
+
+<main class="discount-page">
+
+  <h1>Discounts</h1>
+  <p class="subtitle">Apply discounts to products or categories</p>
+
+  <form class="discount-form">
+
+    <!-- DISCOUNT TYPE -->
+    <div class="form-group">
+      <label>Apply Discount To</label>
+      <select id="applyType">
+        <option value="single">Single Product</option>
+        <option value="category">Category</option>
+        <option value="all">All Products</option>
+      </select>
     </div>
-    <script type="module" src="index.js"></script>
+
+    <!-- PRODUCT NAME -->
+    <div class="form-group" id="productField">
+      <label>Product Name</label>
+      <input type="text" id="productName" placeholder="Exact product name" />
+    </div>
+
+    <!-- CATEGORY -->
+    <div class="form-group" id="categoryField" style="display:none">
+      <label>Category</label>
+      <input type="text" id="categoryName" placeholder="Category name" />
+    </div>
+
+    <!-- DISCOUNT MODE -->
+    <div class="form-group">
+      <label>Discount Type</label>
+      <select id="discountType">
+        <option value="percent">Percentage (%)</option>
+        <option value="flat">Flat Amount (₹)</option>
+      </select>
+    </div>
+
+    <!-- DISCOUNT VALUE -->
+    <div class="form-group">
+      <label>Discount Value</label>
+      <input type="number" id="discountValue" placeholder="Enter discount value" />
+    </div>
+
+    <button type="submit" class="apply-btn">
+      Apply Discount
+    </button>
+
+  </form>
+
+</main>
+
+<!-- ================= BOTTOM NAV ================= -->
+<nav class="bottom-nav">
+  <button id="home" onclick="location.href='index.html'">
+    <i class="fa-solid fa-house"></i>
+    <span>Home</span>
+  </button>
+
+  <button id="add" onclick="location.href='product.html'">
+    <i class="fa-solid fa-box"></i>
+    <span>Products</span>
+  </button>
+
+  <button id="discount" class="active" onclick="location.href='discount.html'">
+    <i class="fa-solid fa-tag"></i>
+    <span>Discount</span>
+  </button>
+
+  <button id="order" onclick="location.href='order.html'">
+    <i class="fa-solid fa-cart-shopping"></i>
+    <span>Orders</span>
+  </button>
+</nav>
+
+<script type="module" src="discount.js"></script>
 </body>
 </html>

@@ -2,38 +2,124 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
-  <link rel="stylesheet" href="product.css">
-  <title>Product Details</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Products | Personalised Surprises</title>
+
+  <!-- Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="product.css" />
 </head>
 <body>
-    <div class="product-details"></div>
-    <h2>Edit your product details</h2>
-    <textarea id="NameInput" placeholder="Edit product description..."></textarea>
-    <textarea id="descriptionInput" placeholder="Edit product description..."></textarea>
-    <textarea id="priceInput" placeholder="Edit product description..."></textarea>
-    <br />
-    <button id="save">Save Changes</button>
-    <button id="delete">Delete Product</button>
-  <script type="module" src="product.js"></script>
-  <div class="bottom">
-    <div class="button" id="home">
-      <i class="fa-solid fa-house"></i>
-      <p>Home</p>
+
+<!-- ================= HEADER ================= -->
+<header class="admin-header">
+  <div class="header-inner">
+    <div class="brand">
+      <img src="logo.jpg" alt="Logo" />
+      <span>Admin Panel</span>
     </div>
-    <div class="button" id="add">
-      <i class="fa-solid fa-plus"></i>
-      <p>Add</p>
-    </div>
-    <div class="button" id="discount">
-      <i class="fa-solid fa-tag"></i>
-      <p>Discount</p>
-    </div>
-    <div class="button" id="order">
-      <i class="fa-solid fa-cart-shopping"></i>
-      <p>Order</p>
+
+    <div class="profile">
+      <i class="fa-solid fa-user"></i>
     </div>
   </div>
+</header>
+
+
+<!-- ================= MAIN ================= -->
+<main class="admin-container">
+
+  <!-- PAGE TITLE -->
+  <section class="page-header">
+    <h1>Products</h1>
+    <p>Manage all your products in one place</p>
+  </section>
+
+  <!-- SEARCH & FILTER -->
+  <section class="toolbar">
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input
+        id="searchInput"
+        type="text"
+        placeholder="Search products by name..."
+      />
+    </div>
+
+    <div class="toolbar-actions">
+      <button class="filter-btn">
+        <i class="fa-solid fa-filter"></i> Filter
+      </button>
+      <button class="add-btn" id="add">
+        <i class="fa-solid fa-plus"></i> Add Product
+      </button>
+    </div>
+  </section>
+
+  <!-- ================= PRODUCT LIST ================= -->
+  <section class="products-section">
+
+    <!-- Empty / Loading State -->
+    <div class="state-message" id="loadingState">
+      Loading products...
+    </div>
+
+    <!-- PRODUCT GRID -->
+    <div class="product-grid" id="productList">
+      <!-- Product cards injected by JS -->
+
+      <!-- Example structure for JS reference -->
+      <!--
+      <div class="product-card">
+        <img src="product.jpg" alt="Product Name" />
+        <div class="product-info">
+          <h3>Product Name</h3>
+          <p class="price">₹499</p>
+          <span class="badge">Bestseller</span>
+        </div>
+        <div class="product-actions">
+          <button class="edit"><i class="fa-solid fa-pen"></i></button>
+          <button class="delete"><i class="fa-solid fa-trash"></i></button>
+        </div>
+      </div>
+      -->
+    </div>
+
+  </section>
+
+</main>
+
+<!-- ================= BOTTOM NAV ================= -->
+<nav class="bottom-nav">
+  <button id="home" onclick="location.href='index.html'">
+    <i class="fa-solid fa-house"></i>
+    <span>Home</span>
+  </button>
+
+  <button id="add" class="active">
+    <i class="fa-solid fa-box"></i>
+    <span>Products</span>
+  </button>
+
+  <button id="discount" onclick="location.href='product.html'">
+    <i class="fa-solid fa-tag"></i>
+    <span>Discount</span>
+  </button>
+
+  <button id="order">
+    <i class="fa-solid fa-cart-shopping"></i>
+    <span>Orders</span>
+  </button>
+</nav>
+
+<!-- ================= JS ================= -->
+<script type="module" src="product.js"></script>
+
 </body>
 </html>

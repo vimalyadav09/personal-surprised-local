@@ -1,106 +1,276 @@
-body{
-    margin: 0;
+/* =====================
+   ROOT + RESET
+===================== */
+:root {
+  --pink-main: #ff9fd6;
+  --pink-accent: #ff5fa8;
+  --bg-soft: #fff5fa;
+  --bg-white: #ffffff;
+  --text-dark: #2b2b2b;
+  --text-muted: #777;
+  --border-light: #eee;
+  --radius-lg: 18px;
+  --radius-md: 12px;
 }
 
-.main{
-    width: 100%;
-    height: 100%;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 }
 
-.main .header{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    padding-bottom: 0;
+body {
+  background: var(--bg-soft);
+  color: var(--text-dark);
 }
 
-.main .header i{
-    font-size: 30px;
+/* =====================
+   HEADER
+===================== */
+.admin-header {
+  background: var(--bg-white);
+  padding: 14px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-light);
 }
 
-.mainform{
-     margin-left: 20px;
-     text-align: center;
-     margin-bottom: 100px;
+.admin-header img {
+  height: 48px;
 }
 
-.form{
-    display: flex;
-    flex-direction: column;
-    padding-top: 20px;
-    text-align: left;
-    z-index: 1;
+.admin-profile i {
+  font-size: 28px;
+  color: var(--pink-accent);
+  cursor: pointer;
 }
 
-.form input{
-    width: 100%;
-    height: 40px;
-    margin-top: 20px;
+/* =====================
+   CONTAINER
+===================== */
+.admin-container {
+  max-width: 900px;
+  margin: 30px auto 120px;
+  padding: 0 20px;
 }
 
-.form p{
-    margin: 0;
-    font-size: 20px;
+/* =====================
+   FORM
+===================== */
+.product-form {
+  background: var(--bg-white);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.06);
 }
 
-.bottom{
-    position: fixed;
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    bottom: 0;
-    padding-bottom: 10px;
-    padding-top: 15px;
-    background-color: white;
-    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 2;
-
+.product-form h1 {
+  font-size: 28px;
+  margin-bottom: 6px;
 }
 
-.bottom .button{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.form-subtitle {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 30px;
 }
 
-.bottom .button i{
-    font-size: 20px;
+/* =====================
+   SECTIONS
+===================== */
+.form-section {
+  margin-bottom: 36px;
 }
 
-.bottom .button p{
-    margin: 0;
-    margin-top: 10px;
+.form-section h3 {
+  font-size: 18px;
+  margin-bottom: 18px;
+  color: var(--text-dark);
 }
 
-.form.upload-image{
-    margin-top: 20px;
-    border: 3px dotted black;
-    width: 40%;
-    text-align: center;
-    padding-bottom: 10px;
+/* =====================
+   FORM GROUPS
+===================== */
+.form-group {
+  margin-bottom: 18px;
 }
 
-.form.upload-image img{
-    height: 40px;
-    width: 40px;
-    margin-top: -15px;
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
 }
 
-#submit{
-    width: 30%;
-    padding: 12px 0px 12px 0px;
-    background-color: black;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    margin-top: 40px;
+label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 6px;
+  font-weight: 500;
 }
 
+/* INPUTS */
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  font-size: 14px;
+  background: #fff;
+}
 
-@media (max-width: 600px){
-    .main{
-        width: 100%;
-    }
+textarea {
+  resize: none;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--pink-accent);
+}
+
+/* =====================
+   CHECKBOX GROUPS
+===================== */
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.checkbox-group input {
+  accent-color: var(--pink-accent);
+}
+
+/* TOGGLE */
+.toggle label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+}
+
+/* =====================
+   IMAGE UPLOAD
+===================== */
+.image-upload {
+  border: 2px dashed var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 30px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.image-upload:hover {
+  border-color: var(--pink-accent);
+  background: #fff0f8;
+}
+
+.image-upload label {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.image-upload i {
+  font-size: 34px;
+  color: var(--pink-accent);
+}
+
+.image-upload span {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.image-upload input {
+  display: none;
+}
+
+/* =====================
+   SUBMIT BUTTON
+===================== */
+.form-actions {
+  text-align: right;
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, var(--pink-main), var(--pink-accent));
+  color: #fff;
+  border: none;
+  padding: 12px 32px;
+  border-radius: 30px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(255,95,168,0.35);
+}
+
+/* ===============================
+   BOTTOM NAV
+================================ */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  background: var(--bg-white);
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+}
+
+.bottom-nav button {
+  background: none;
+  border: none;
+  font-size: 12px;
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.bottom-nav button i {
+  font-size: 18px;
+}
+
+.bottom-nav button.active {
+  color: var(--pink-accent);
+}
+
+/* =====================
+   MOBILE
+===================== */
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-container {
+    margin-bottom: 140px;
+  }
 }

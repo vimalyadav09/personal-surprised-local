@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Orders | Admin</title>
+
+  <link rel="stylesheet" href="order.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="admin-header">
+  <div class="header-inner">
+    <div class="brand">
+      <img src="logo.jpg" />
+      <span>Admin Panel</span>
+    </div>
+    <div class="profile">
+      <i class="fa-solid fa-user"></i>
+    </div>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="orders-page">
+
+  <h1>Orders</h1>
+  <p class="subtitle">Manage current and past orders</p>
+
+  
+
+  <!-- TABS -->
+  <div class="order-tabs">
+    <button class="tab active" data-tab="active">Active Orders</button>
+    <button class="tab" data-tab="completed">Completed Orders</button>
+  </div>
+
+  <!-- ACTIVE ORDERS -->
+  <section id="activeOrders" class="orders-section"></section>
+
+  <!-- FILTER BAR -->
+<div class="order-filters">
+  <div class="filter-group">
+    <label>Filter by Date</label>
+    <input type="date" id="filterDate" />
+  </div>
+
+  <div class="filter-group">
+    <label>Filter by Month</label>
+    <input type="month" id="filterMonth" />
+  </div>
+
+  <button id="clearFilter" class="clear-btn">
+    Clear Filter
+  </button>
+</div>
+
+
+  <!-- COMPLETED ORDERS -->
+  <section id="completedOrders" class="orders-section hidden"></section>
+
+</main>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <button onclick="location.href='index.html'">
+    <i class="fa-solid fa-house"></i><span>Home</span>
+  </button>
+  <button onclick="location.href='product.html'">
+    <i class="fa-solid fa-box"></i><span>Products</span>
+  </button>
+  <button onclick="location.href='discount.html'">
+    <i class="fa-solid fa-tag"></i><span>Discount</span>
+  </button>
+  <button class="active">
+    <i class="fa-solid fa-cart-shopping"></i><span>Orders</span>
+  </button>
+</nav>
+
+<script type="module" src="order.js"></script>
+</body>
+</html>

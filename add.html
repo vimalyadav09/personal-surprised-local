@@ -3,72 +3,179 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Add Product</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <title>Add Product | Personalised Surprises</title>
+
   <link rel="stylesheet" href="add.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 </head>
 <body>
-  <div class="main">
-    <header class="header">
-      <img src="logo.jpg" alt="Logo" height="70px" />
-      <i class="fa-solid fa-circle-user"></i>
-    </header>
 
-    <main class="mainform">
-      <form class="add-products-form">
-        <h1>Add Product</h1>
-
-        <div class="form" id="p-name">
-          <p>Product Name</p>
-          <input type="text" id="product-name"/>
-        </div>
-
-        <div class="form" id="p-desc">
-          <p>Description</p>
-          <input type="text" id="product-desc"/>
-        </div>
-
-        <div class="form" id="p-price">
-          <p>Price</p>
-          <input type="text" id="product-price"/>
-        </div>
-
-        <div class="form" id="p-category">
-          <p>Category</p>
-          <input type="text" id="product-category"/>
-        </div>
-
-        <div class="form upload-image">
-            <label for="image-upload">
-                <img src="upload.png" alt="Upload Images" height="100px" style="cursor: pointer;"/>
-            </label>
-            <input type="file" id="image-upload" accept="image/*" multiple style="display: none;"/>
-            <p>Upload Images</p>
-        </div>
-        <button type="submit" id="submit">Submit</button>
-      </form>
-    </main>
+<!-- ================= HEADER ================= -->
+<header class="admin-header">
+  <div class="logo">
+    <img src="logo.jpg" alt="Personalised Surprises" />
   </div>
+  <div class="admin-profile">
+    <i class="fa-solid fa-circle-user"></i>
+  </div>
+</header>
 
-  <nav class="bottom">
-    <div class="button" id="home">
-      <i class="fa-solid fa-house"></i>
-      <p>Home</p>
-    </div>
-    <div class="button" id="add">
-      <i class="fa-solid fa-plus"></i>
-      <p>Add</p>
-    </div>
-    <div class="button" id="discount">
-      <i class="fa-solid fa-tag"></i>
-      <p>Discount</p>
-    </div>
-    <div class="button" id="order">
-      <i class="fa-solid fa-cart-shopping"></i>
-      <p>Order</p>
-    </div>
-  </nav>
+<!-- ================= MAIN ================= -->
+<main class="admin-container">
 
-  <script type="module" src="add.js"></script>
+  <form class="product-form">
+
+    <h1>Add New Product</h1>
+    <p class="form-subtitle">
+      Fill in the details to add a new gift to your store
+    </p>
+
+    <!-- BASIC DETAILS -->
+    <section class="form-section">
+      <h3>Basic Information</h3>
+
+      <div class="form-group">
+        <label>Product Name</label>
+        <input type="text" id="product-name" placeholder="Eg. Love Story Newspaper" required />
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <textarea id="product-desc" rows="3" placeholder="Short description about the product"></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Price (₹)</label>
+          <input type="number" id="product-price" placeholder="500" required />
+        </div>
+
+        <div class="form-group">
+          <label>Delivery Time</label>
+          <select id="delivery-time">
+            <option value="1-2 Days">1–2 Days</option>
+            <option value="3-5 Days">3–5 Days</option>
+            <option value="Same Day">Same Day</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- CATEGORY & FILTERING -->
+    <section class="form-section">
+      <h3>Category & Filters</h3>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Product Type</label>
+          <select id="product-type">
+            <option>Polaroid</option>
+            <option>Frame</option>
+            <option>Gift Hamper</option>
+            <option>Keychain</option>
+            <option>LED Gift</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Badge</label>
+          <select id="product-badge">
+            <option value="">None</option>
+            <option>Bestseller</option>
+            <option>Trending</option>
+            <option>New Arrival</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Occasion</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" value="Birthday"> Birthday</label>
+          <label><input type="checkbox" value="Anniversary"> Anniversary</label>
+          <label><input type="checkbox" value="Valentine"> Valentine</label>
+          <label><input type="checkbox" value="Festival"> Festival</label>
+          <label><input type="checkbox" value="Surprise"> Surprise</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>For Whom</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" value="Him"> Him</label>
+          <label><input type="checkbox" value="Her"> Her</label>
+          <label><input type="checkbox" value="Couple"> Couple</label>
+          <label><input type="checkbox" value="Friends"> Friends</label>
+        </div>
+      </div>
+    </section>
+
+    <!-- CUSTOMIZATION -->
+    <section class="form-section">
+      <h3>Customization</h3>
+
+      <div class="form-group toggle">
+        <label>
+          <input type="checkbox" id="customizable" />
+          Customizable Product
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label>Customization Options</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" value="Name"> Name</label>
+          <label><input type="checkbox" value="Photo"> Photo</label>
+          <label><input type="checkbox" value="Message"> Message</label>
+          <label><input type="checkbox" value="Date"> Date</label>
+        </div>
+      </div>
+    </section>
+
+    <!-- IMAGES -->
+    <section class="form-section">
+      <h3>Product Images</h3>
+
+      <div class="image-upload">
+        <label for="image-upload">
+          <i class="fa-solid fa-cloud-arrow-up"></i>
+          <span>Upload Images</span>
+        </label>
+        <input type="file" id="image-upload" multiple accept="image/*" />
+      </div>
+    </section>
+
+    <!-- SUBMIT -->
+    <div class="form-actions">
+      <button type="submit" class="primary-btn">
+        Add Product
+      </button>
+    </div>
+
+  </form>
+
+</main>
+
+<!-- ================= BOTTOM NAV ================= -->
+<nav class="bottom-nav">
+  <button>
+    <i class="fa-solid fa-house"></i>
+    <span>Home</span>
+  </button>
+  <button class="active">
+    <i class="fa-solid fa-plus"></i>
+    <span>Add</span>
+  </button>
+  <button>
+    <i class="fa-solid fa-tag"></i>
+    <span>Discount</span>
+  </button>
+  <button>
+    <i class="fa-solid fa-cart-shopping"></i>
+    <span>Orders</span>
+  </button>
+</nav>
+
+<script type="module" src="add.js"></script>
 </body>
 </html>

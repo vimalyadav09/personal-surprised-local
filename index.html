@@ -3,46 +3,117 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  <title>Admin Dashboard</title>
+
   <link rel="stylesheet" href="index.css" />
-  <title>Product Page</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 </head>
 <body>
-  <div class="main">
-    <div class=""></div>
-    <div class="header">
-      <img src="logo.jpg" alt="Logo" height="70px" />
-      <i class="fa-solid fa-circle-user"></i>
+
+<!-- HEADER -->
+<header class="admin-header">
+  <div class="header-inner">
+    <div class="brand">
+      <img src="logo.jpg" alt="Logo">
+      <span>Admin Panel</span>
     </div>
-    <div class="search-bar">
-      <input id="searchInput" type="text" placeholder="Search here" />
-      <i class="fa-solid fa-magnifying-glass"></i>
-    </div>
-    <div class="products" id="productList">
-        <div class="list"></div>
+    <div class="profile">
+      <i class="fa-solid fa-user"></i>
     </div>
   </div>
+</header>
 
-  <div class="bottom">
-    <div class="button" id="home">
-      <i class="fa-solid fa-house"></i>
-      <p>Home</p>
-    </div>
-    <div class="button" id="add">
-      <i class="fa-solid fa-plus"></i>
-      <p>Add</p>
-    </div>
-    <div class="button" id="discount">
-      <i class="fa-solid fa-tag"></i>
-      <p>Discount</p>
-    </div>
-    <div class="button" id="order">
-      <i class="fa-solid fa-cart-shopping"></i>
-      <p>Order</p>
-    </div>
-  </div>
+<!-- MAIN -->
+<main class="dashboard">
 
-  <!-- Firebase & JS -->
-  <script type="module" src="index.js"></script>
+  <h1 class="page-title">Dashboard</h1>
+  <p class="page-subtitle">Track your business growth</p>
+
+  <!-- STATS -->
+  <section class="stats-grid">
+    <div class="stat-card pink">
+      <p>Total Products</p>
+      <h2 id="totalProducts">0</h2>
+    </div>
+
+    <div class="stat-card blue">
+      <p>Total Orders</p>
+      <h2 id="totalOrders">0</h2>
+    </div>
+
+    <div class="stat-card green">
+      <p>Total Revenue</p>
+      <h2 id="totalRevenue">₹0</h2>
+    </div>
+
+    <div class="stat-card purple">
+      <p>Orders Today</p>
+      <h2 id="todayOrders">0</h2>
+    </div>
+  </section>
+
+  <!-- PERFORMANCE -->
+  <section class="performance">
+    <h3>Performance Overview</h3>
+
+    <div class="performance-grid">
+      <div class="stat-card orange">
+        <p>Conversion Rate</p>
+        <h2 id="conversionRate">0%</h2>
+      </div>
+
+      <div class="stat-card teal">
+        <p>Visitors Today</p>
+        <h2 id="visitorsToday">0</h2>
+      </div>
+
+      <div class="stat-card teal">
+        <p>Visitors This Month</p>
+        <h2 id="visitorsMonth">0</h2>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSIGHTS -->
+  <section class="insights">
+    <h3>Business Insights</h3>
+
+    <div class="insight-card">
+      <p>🔥 Best Category</p>
+      <strong id="bestCategory">—</strong>
+    </div>
+
+    <div class="insight-card">
+      <p>📦 Avg Order Value</p>
+      <strong id="avgOrder">₹0</strong>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= BOTTOM NAV ================= -->
+<nav class="bottom-nav">
+  <button id="home" onclick="location.href='index.html'" class="active">
+    <i class="fa-solid fa-house"></i>
+    <span>Home</span>
+  </button>
+
+  <button id="add">
+    <i class="fa-solid fa-box" onclick="location.href='product.html'"></i>
+    <span>Products</span>
+  </button>
+
+  <button id="discount" onclick="location.href='discount.html'">
+    <i class="fa-solid fa-tag"></i>
+    <span>Discount</span>
+  </button>
+
+  <button id="order" onclick="location.href='order.html'">
+    <i class="fa-solid fa-cart-shopping"></i>
+    <span>Orders</span>
+  </button>
+</nav>
+
+<script type="module" src="index.js"></script>
 </body>
 </html>

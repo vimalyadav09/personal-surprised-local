@@ -1,0 +1,223 @@
+:root {
+  --pink: #ff5fa8;
+  --bg: #fff6fa;
+  --card: #ffffff;
+  --text: #2b2b2b;
+  --muted: #777;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+}
+
+/* HEADER */
+.admin-header {
+  background: #fff;
+}
+
+.header-inner {
+  max-width: 1100px;
+  margin: auto;
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.brand img { height: 32px; }
+
+.profile {
+  width: 36px;
+  height: 36px;
+  background: #ffd6e8;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* PAGE */
+.orders-page {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 24px;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+/* TABS */
+.order-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.tab {
+  flex: 1;
+  padding: 10px;
+  border-radius: 20px;
+  border: none;
+  background: #eee;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.tab.active {
+  background: var(--pink);
+  color: #fff;
+}
+
+/* FILTER BAR */
+.order-filters {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+}
+
+.filter-group label {
+  margin-bottom: 4px;
+  color: var(--muted);
+}
+
+.filter-group input {
+  padding: 8px 12px;
+  border-radius: 14px;
+  border: 1px solid #ddd;
+  font-size: 13px;
+}
+
+.clear-btn {
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: none;
+  background: #eee;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+
+/* ORDERS */
+.orders-section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.order-card {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.order-id {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.order-status {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  background: #f3f3f3;
+}
+
+.order-status.Pending { background: #fff0d6; }
+.order-status.Processing { background: #e8f2ff; }
+.order-status.Delivered { background: #e6f9ee; }
+
+.order-body p {
+  font-size: 14px;
+  margin: 6px 0;
+}
+
+.order-actions {
+  margin-top: 10px;
+}
+
+.order-actions select {
+  padding: 6px 10px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+}
+
+.hidden {
+  display: none;
+}
+
+/* ===============================
+   BOTTOM NAV (CONSISTENT)
+================================ */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  background: #ffffff;
+  border-top: 1px solid rgba(0,0,0,0.08);
+
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+
+  z-index: 100;
+}
+
+.bottom-nav button {
+  background: none;
+  border: none;
+
+  font-size: 12px;
+  color: var(--muted);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+
+  cursor: pointer;
+}
+
+.bottom-nav button i {
+  font-size: 18px;
+}
+
+.bottom-nav button.active {
+  color: var(--pink);
+}
+

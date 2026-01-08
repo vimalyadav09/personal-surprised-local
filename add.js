@@ -2,10 +2,13 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebas
 import {
   getDatabase,
   ref,
+  push,
   set
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
 
-// Firebase Config
+/* =====================
+   FIREBASE INIT
+===================== */
 const firebaseConfig = {
   apiKey: "AIzaSyCgeS0Qo-2K1RQ2his1lwhgSfVtIMlCfZw",
   authDomain: "personalised-surprise.firebaseapp.com",
@@ -13,91 +16,113 @@ const firebaseConfig = {
   projectId: "personalised-surprise",
   storageBucket: "personalised-surprise.appspot.com",
   messagingSenderId: "847601751688",
-  appId: "1:847601751688:web:023d58ce5200eca9ff313d",
-  measurementId: "G-64EDC5QHJT"
+  appId: "1:847601751688:web:023d58ce5200eca9ff313d"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-const home = document.getElementById("home");
-const discount = document.getElementById("discount");
-const order = document.getElementById("order")
+/* =====================
+   NAVIGATION
+===================== */
+document.getElementById("home")?.addEventListener("click", () => {
+  location.href = "index.html";
+});
 
-home.addEventListener('click',()=>{
-    window.location.href="index.html"
-})
+document.getElementById("discount")?.addEventListener("click", () => {
+  location.href = "discount.html";
+});
 
-discount.addEventListener('click',()=>{
-    window.location.href="discount.html"
-})
+document.getElementById("order")?.addEventListener("click", () => {
+  location.href = "order.html";
+});
 
-order.addEventListener('click',()=>{
-    window.location.href="order.html"
-})
-
-// Wait for DOM to load
+/* =====================
+   FORM LOGIC
+===================== */
 document.addEventListener("DOMContentLoaded", () => {
-  const form = document.querySelector(".add-products-form");
+  const form = document.querySelector(".product-form");
+  const submitBtn = document.querySelector(".primary-btn");
   const imageInput = document.getElementById("image-upload");
 
-  if (!form || !imageInput) {
-    console.error("Form or image input not found. Check your HTML.");
-    return;
-  }
+  if (!form) return;
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const name = document.getElementById("product-name").value.trim();
-    const desc = document.getElementById("product-desc").value.trim();
-    const price = document.getElementById("product-price").value.trim();
-    const category = document.getElementById("product-category").value.trim();
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Uploading...";
 
-    if (!name || !desc || !price || !category) {
-      alert("Please fill all the fields.");
-      return;
+    try {
+      /* BASIC INFO */
+      const product = {
+        name: getValue("product-name"),
+        description: getValue("product-desc"),
+        price: Number(getValue("product-price")),
+        type: getValue("product-type"),
+        badge: getValue("product-badge"),
+        deliveryTime: getValue("delivery-time"),
+        customizable: document.getElementById("customizable")?.checked || false,
+        occasion: getCheckedValues("occasion"),
+        forWhom: getCheckedValues("forWhom"),
+        images: [],
+        createdAt: Date.now()
+      };
+
+      if (!product.name || !product.price) {
+        alert("Please fill required fields");
+        throw new Error("Missing fields");
+      }
+
+      /* IMAGE HANDLING (TEMP BASE64) */
+      if (imageInput.files.length === 0) {
+        alert("Please upload at least one image");
+        throw new Error("No images");
+      }
+
+      for (const file of imageInput.files) {
+        const base64 = await toBase64(file);
+        product.images.push(base64);
+      }
+
+      /* SAVE TO DB */
+      const productsRef = ref(db, "products");
+      const newProductRef = push(productsRef);
+
+      await set(newProductRef, product);
+
+      alert("✅ Product added successfully!");
+      form.reset();
+      location.href = "index.html";
+
+    } catch (err) {
+      console.error(err);
+      alert("❌ Failed to add product");
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Add Product";
     }
-
-    const files = imageInput.files;
-    const base64Images = [];
-
-    for (let i = 0; i < files.length; i++) {
-      const base64 = await convertToBase64(files[i]);
-      base64Images.push(base64);
-    }
-
-    const productData = {
-      name,
-      desc,
-      price,
-      category,
-      images: base64Images
-    };
-
-    const productPath = `Personalised Surprise/products/${category}/${name}`;
-    const productRef = ref(db, productPath);
-
-    set(productRef, productData)
-      .then(() => {
-        alert("Product added successfully!");
-        form.reset();
-        window.location.href="index.html"
-      })
-      .catch((err) => {
-        console.error("Error uploading product:", err);
-        alert("Failed to upload product.");
-      });
   });
 });
 
-// Convert image to base64 string
-function convertToBase64(file) {
+/* =====================
+   HELPERS
+===================== */
+function getValue(id) {
+  return document.getElementById(id)?.value.trim() || "";
+}
+
+function getCheckedValues(name) {
+  return Array.from(
+    document.querySelectorAll(`input[name="${name}"]:checked`)
+  ).map(el => el.value);
+}
+
+function toBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
+    reader.onerror = reject;
     reader.readAsDataURL(file);
   });
 }

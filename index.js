@@ -1,8 +1,7 @@
-// Import Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
-// Firebase config
+/* FIREBASE CONFIG */
 const firebaseConfig = {
   apiKey: "AIzaSyCgeS0Qo-2K1RQ2his1lwhgSfVtIMlCfZw",
   authDomain: "personalised-surprise.firebaseapp.com",
@@ -10,103 +9,67 @@ const firebaseConfig = {
   projectId: "personalised-surprise",
   storageBucket: "personalised-surprise.appspot.com",
   messagingSenderId: "847601751688",
-  appId: "1:847601751688:web:023d58ce5200eca9ff313d",
-  measurementId: "G-64EDC5QHJT"
+  appId: "1:847601751688:web:023d58ce5200eca9ff313d"
 };
 
-// Navigation
-document.getElementById("add").addEventListener("click", () => {
-  window.location.href = "add.html";
-});
-document.getElementById("discount").addEventListener("click", () => {
-  window.location.href = "discount.html";
-});
-document.getElementById("order").addEventListener("click", () => {
-  window.location.href = "order.html";
-});
-
-// Firebase init
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// DOM container
-const productsContainer = document.querySelector(".products");
+/* ELEMENTS */
+const totalProducts = document.getElementById("totalProducts");
+const totalOrders = document.getElementById("totalOrders");
+const totalRevenue = document.getElementById("totalRevenue");
+const todayOrders = document.getElementById("todayOrders");
+const conversionRate = document.getElementById("conversionRate");
+const visitorsToday = document.getElementById("visitorsToday");
+const visitorsMonth = document.getElementById("visitorsMonth");
+const bestCategory = document.getElementById("bestCategory");
+const avgOrder = document.getElementById("avgOrder");
 
-// DB ref
-const productRef = ref(db, "Personalised Surprise/products");
+/* PRODUCTS COUNT */
+onValue(ref(db, "products"), snap => {
+  let count = 0;
+  snap.forEach(cat => {
+    count += Object.keys(cat.val()).length;
+  });
+  totalProducts.textContent = count;
+});
 
-// Fetch and display
-onValue(productRef, (snapshot) => {
-  productsContainer.innerHTML = "";
+/* ORDERS & REVENUE */
+onValue(ref(db, "orders"), snap => {
+  let orders = 0;
+  let revenue = 0;
+  let today = new Date().toDateString();
+  let todayCount = 0;
+  let categoryMap = {};
 
-  snapshot.forEach((categorySnap) => {
-    const categoryName = categorySnap.key;
-    const categoryData = categorySnap.val();
+  snap.forEach(o => {
+    const order = o.val();
+    orders++;
+    revenue += Number(order.total || 0);
 
-    // Category heading
-    const categoryHeading = document.createElement("h2");
-    categoryHeading.textContent = categoryName;
-    productsContainer.appendChild(categoryHeading);
-
-    // List container
-    const listDiv = document.createElement("div");
-    listDiv.className = "list";
-    listDiv.style.display = "flex";
-    listDiv.style.overflowX = "auto";
-    listDiv.style.scrollBehavior = "smooth";
-    listDiv.style.gap = "20px";
-    listDiv.style.padding = "10px 0";
-
-    // Products
-    for (let productName in categoryData) {
-      const product = categoryData[productName];
-      const productDiv = document.createElement("div");
-      productDiv.className = "product";
-      productDiv.style.minWidth = "150px";
-      productDiv.style.flex = "0 0 auto";
-      productDiv.style.border = "1px solid #ddd";
-      productDiv.style.borderRadius = "10px";
-      productDiv.style.padding = "10px";
-      productDiv.style.boxShadow = "0 2px 8px rgba(0,0,0,0.1)";
-      productDiv.style.cursor = "pointer";
-      productDiv.style.background = "#fff";
-
-      // Image
-      if (product.images && Array.isArray(product.images)) {
-        const imageContainer = document.createElement("div");
-        const imgWrapper = document.createElement("div");
-        imgWrapper.style.width = "150px";
-        imgWrapper.style.height = "120px";
-        imgWrapper.style.overflow = "hidden";
-        imgWrapper.style.borderRadius = "10px";
-
-        const img = document.createElement("img");
-        img.src = product.images[0];
-        img.style.width = "100%";
-        img.style.height = "100%";
-        img.style.objectFit = "cover";
-
-        imgWrapper.appendChild(img);
-        imageContainer.appendChild(imgWrapper);
-        productDiv.appendChild(imageContainer);
-      }
-
-      const title = document.createElement("h3");
-      title.textContent = productName;
-      productDiv.appendChild(title);
-
-      const price = document.createElement("h2");
-      price.textContent = `₹ ${product.price}`;
-      productDiv.appendChild(price);
-
-      productDiv.addEventListener("click", () => {
-        const url = `product.html?category=${encodeURIComponent(categoryName)}&name=${encodeURIComponent(productName)}`;
-        window.location.href = url;
-      });
-
-      listDiv.appendChild(productDiv);
+    if (new Date(order.createdAt).toDateString() === today) {
+      todayCount++;
     }
 
-    productsContainer.appendChild(listDiv);
+    order.items?.forEach(item => {
+      categoryMap[item.category] = (categoryMap[item.category] || 0) + 1;
+    });
   });
+
+  totalOrders.textContent = orders;
+  totalRevenue.textContent = `₹${revenue}`;
+  todayOrders.textContent = todayCount;
+  avgOrder.textContent = `₹${Math.round(revenue / orders || 0)}`;
+
+  bestCategory.textContent =
+    Object.keys(categoryMap).sort((a, b) =>
+      categoryMap[b] - categoryMap[a]
+    )[0] || "—";
+
+  conversionRate.textContent = `${Math.round((orders / 200) * 100)}%`; // assuming 200 visitors
 });
+
+/* VISITORS (DUMMY FOR NOW) */
+visitorsToday.textContent = 87;
+visitorsMonth.textContent = 2140;
