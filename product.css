@@ -24,10 +24,10 @@ body {
   background: var(--bg-soft);
   color: var(--text-dark);
 }
+
 /* ===============================
-   HEADER (IMPROVED)
+   HEADER
 ================================ */
-/* HEADER */
 .admin-header {
   background: #fff6fa;
 }
@@ -36,13 +36,11 @@ body {
   max-width: 1100px;
   margin: 0 auto;
   padding: 14px 20px;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-/* BRAND */
 .brand {
   display: flex;
   align-items: center;
@@ -65,7 +63,6 @@ body {
   height: 36px;
   border-radius: 50%;
   background: #ffd6e8;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -73,34 +70,8 @@ body {
 
 .profile i {
   font-size: 14px;
-  color: #ff5fa8;
-}
-
-/* ADMIN ICON */
-.admin-actions {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: #ffe3f0;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.admin-actions i {
-  font-size: 20px;
   color: var(--pink-accent);
 }
-
-.admin-actions:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 20px rgba(255,95,168,0.25);
-}
-
 
 /* ===============================
    CONTAINER
@@ -151,11 +122,6 @@ body {
   max-width: 320px;
 }
 
-.search-box i {
-  color: var(--text-muted);
-  font-size: 14px;
-}
-
 .search-box input {
   border: none;
   outline: none;
@@ -170,6 +136,16 @@ body {
   gap: 10px;
 }
 
+.filter-btn {
+  background: #f3f3f3;
+  color: #555;
+}
+
+.add-btn {
+  background: var(--pink-accent);
+  color: #fff;
+}
+
 .filter-btn,
 .add-btn {
   border: none;
@@ -182,16 +158,6 @@ body {
   gap: 6px;
 }
 
-.filter-btn {
-  background: #f3f3f3;
-  color: #555;
-}
-
-.add-btn {
-  background: var(--pink-accent);
-  color: #fff;
-}
-
 /* ===============================
    PRODUCTS SECTION
 ================================ */
@@ -199,7 +165,14 @@ body {
   margin-top: 26px;
 }
 
-/* LOADER / EMPTY STATE */
+/* CATEGORY TITLE */
+.products h2 {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 26px 0 12px;
+}
+
+/* LOADER / EMPTY */
 .state-message,
 .empty-state {
   background: var(--bg-white);
@@ -211,24 +184,33 @@ body {
 }
 
 /* ===============================
-   PRODUCT GRID
+   HORIZONTAL PRODUCT LIST
 ================================ */
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
+.list {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  scroll-snap-type: x mandatory;
+}
+
+.list::-webkit-scrollbar {
+  display: none;
 }
 
 /* ===============================
    PRODUCT CARD
 ================================ */
 .product {
+  flex: 0 0 48%;
+  max-width: 48%;
   background: var(--bg-white);
   border-radius: var(--radius-lg);
   padding: 12px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  scroll-snap-align: start;
   box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+  transition: transform 0.3s ease;
 }
 
 .product:hover {
@@ -238,9 +220,10 @@ body {
 /* IMAGE */
 .image-wrapper {
   width: 100%;
-  height: 160px;
+  height: 100px;
   border-radius: var(--radius-md);
   overflow: hidden;
+  background: #f2f2f2;
   margin-bottom: 10px;
 }
 
@@ -252,7 +235,8 @@ body {
 
 /* INFO */
 .product h3 {
-  font-size: 16px;
+  font-size: 15px;
+  font-weight: 600;
   margin-bottom: 4px;
 }
 
@@ -260,34 +244,35 @@ body {
   font-size: 14px;
   font-weight: 600;
   color: var(--pink-accent);
+  margin-bottom: 10px;
 }
 
 /* ===============================
-   ADMIN ACTIONS
+   PRODUCT ACTIONS
 ================================ */
-.admin-actions {
-  margin-top: 10px;
+.product-actions {
   display: flex;
   gap: 10px;
 }
 
-.admin-actions button {
+.product-actions button {
   flex: 1;
-  padding: 8px;
+  padding: 6px 0;
   font-size: 12px;
-  border-radius: 10px;
+  border-radius: 8px;
+  font-weight: 500;
   border: none;
   cursor: pointer;
 }
 
-.admin-actions .edit {
-  background: #f3f3f3;
-  color: #333;
+.product-actions .edit {
+  background: #00c853;
+  color: #fff;
 }
 
-.admin-actions .delete {
-  background: #ffe5ec;
-  color: #c0392b;
+.product-actions .delete {
+  background: #ff5252;
+  color: #fff;
 }
 
 /* ===============================
@@ -298,7 +283,6 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-
   background: var(--bg-white);
   border-top: 1px solid var(--border-light);
   display: flex;
@@ -329,6 +313,13 @@ body {
 /* ===============================
    MOBILE
 ================================ */
+@media (max-width: 480px) {
+  .product {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
 @media (max-width: 768px) {
   .toolbar {
     flex-direction: column;

@@ -31,7 +31,6 @@
   </div>
 </header>
 
-
 <!-- ================= MAIN ================= -->
 <main class="admin-container">
 
@@ -56,7 +55,7 @@
       <button class="filter-btn">
         <i class="fa-solid fa-filter"></i> Filter
       </button>
-      <button class="add-btn" id="add">
+      <button class="add-btn" id="addProductBtn">
         <i class="fa-solid fa-plus"></i> Add Product
       </button>
     </div>
@@ -65,30 +64,14 @@
   <!-- ================= PRODUCT LIST ================= -->
   <section class="products-section">
 
-    <!-- Empty / Loading State -->
-    <div class="state-message" id="loadingState">
+    <!-- LOADER -->
+    <div id="loader" class="state-message">
       Loading products...
     </div>
 
-    <!-- PRODUCT GRID -->
-    <div class="product-grid" id="productList">
-      <!-- Product cards injected by JS -->
-
-      <!-- Example structure for JS reference -->
-      <!--
-      <div class="product-card">
-        <img src="product.jpg" alt="Product Name" />
-        <div class="product-info">
-          <h3>Product Name</h3>
-          <p class="price">₹499</p>
-          <span class="badge">Bestseller</span>
-        </div>
-        <div class="product-actions">
-          <button class="edit"><i class="fa-solid fa-pen"></i></button>
-          <button class="delete"><i class="fa-solid fa-trash"></i></button>
-        </div>
-      </div>
-      -->
+    <!-- PRODUCTS CONTAINER (USED BY JS) -->
+    <div class="products">
+      <!-- JS injects categories + lists here -->
     </div>
 
   </section>
@@ -97,17 +80,17 @@
 
 <!-- ================= BOTTOM NAV ================= -->
 <nav class="bottom-nav">
-  <button id="home" onclick="location.href='index.html'">
+  <button id="home">
     <i class="fa-solid fa-house"></i>
     <span>Home</span>
   </button>
 
-  <button id="add" class="active">
+  <button class="active">
     <i class="fa-solid fa-box"></i>
     <span>Products</span>
   </button>
 
-  <button id="discount" onclick="location.href='product.html'">
+  <button id="discount">
     <i class="fa-solid fa-tag"></i>
     <span>Discount</span>
   </button>

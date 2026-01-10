@@ -6,8 +6,7 @@ import {
   getDatabase,
   ref,
   onValue,
-  remove,
-  update
+  remove
 } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
 /* ===============================
@@ -42,9 +41,11 @@ const loader = document.getElementById("loader");
 document.getElementById("add")?.addEventListener("click", () => {
   location.href = "add.html";
 });
+
 document.getElementById("discount")?.addEventListener("click", () => {
   location.href = "discount.html";
 });
+
 document.getElementById("order")?.addEventListener("click", () => {
   location.href = "order.html";
 });
@@ -57,7 +58,7 @@ let allProducts = [];
 /* ===============================
    DATABASE REF
 ================================ */
-const productsRef = ref(db, "Personalised Surprise/products");
+const productsRef = ref(db, "products");
 
 /* ===============================
    FETCH PRODUCTS
@@ -75,23 +76,25 @@ onValue(productsRef, (snapshot) => {
   }
 
   snapshot.forEach((categorySnap) => {
-    const category = categorySnap.key;
-    const products = categorySnap.val();
+    const categoryId = categorySnap.key;
+    const productsObj = categorySnap.val();
 
-    for (const name in products) {
+    Object.keys(productsObj).forEach((productId) => {
+      const product = productsObj[productId];
+
       allProducts.push({
-        category,
-        name,
-        ...products[name]
+        category: categoryId,
+        productId,
+        ...product
       });
-    }
+    });
   });
 
   renderProducts(allProducts);
 });
 
 /* ===============================
-   RENDER FUNCTIONS
+   RENDER PRODUCTS
 ================================ */
 function renderProducts(products) {
   productsContainer.innerHTML = "";
@@ -105,7 +108,8 @@ function renderProducts(products) {
 
   Object.keys(grouped).forEach((category) => {
     const heading = document.createElement("h2");
-    heading.textContent = category;
+    heading.textContent =
+      category.charAt(0).toUpperCase() + category.slice(1);
     productsContainer.appendChild(heading);
 
     const list = document.createElement("div");
@@ -119,26 +123,49 @@ function renderProducts(products) {
   });
 }
 
+/* ===============================
+   PRODUCT CARD
+================================ */
 function createProductCard(product) {
   const card = document.createElement("div");
   card.className = "product";
 
+  const imageArray = product.images
+    ? Array.isArray(product.images)
+      ? product.images
+      : Object.values(product.images)
+    : [];
+
   card.innerHTML = `
     <div class="image-wrapper">
-      <img src="${product.images?.[0] || "placeholder.jpg"}" />
+      <img src="${imageArray[0] || "placeholder.jpg"}" alt="${product.name}">
     </div>
+
     <h3>${product.name}</h3>
     <p class="price">₹ ${product.price}</p>
-    <div class="admin-actions">
+
+    <!-- 🔥 FIXED CLASS -->
+    <div class="product-actions">
       <button class="edit">Edit</button>
       <button class="delete">Delete</button>
     </div>
   `;
 
-  /* VIEW */
+  /* VIEW PRODUCT */
   card.addEventListener("click", (e) => {
     if (e.target.tagName === "BUTTON") return;
-    location.href = `product.html?category=${encodeURIComponent(product.category)}&name=${encodeURIComponent(product.name)}`;
+
+    location.href = `product.html?category=${encodeURIComponent(
+      product.category
+    )}&id=${encodeURIComponent(product.productId)}`;
+  });
+
+  /* EDIT */
+  card.querySelector(".edit").addEventListener("click", (e) => {
+    e.stopPropagation();
+    location.href = `edit.html?category=${encodeURIComponent(
+      product.category
+    )}&id=${encodeURIComponent(product.productId)}`;
   });
 
   /* DELETE */
@@ -147,24 +174,21 @@ function createProductCard(product) {
     deleteProduct(product);
   });
 
-  /* EDIT */
-  card.querySelector(".edit").addEventListener("click", (e) => {
-    e.stopPropagation();
-    location.href = `edit.html?category=${encodeURIComponent(product.category)}&name=${encodeURIComponent(product.name)}`;
-  });
-
   return card;
 }
+
 
 /* ===============================
    SEARCH
 ================================ */
 searchInput.addEventListener("input", (e) => {
   const term = e.target.value.toLowerCase();
-  const filtered = allProducts.filter(p =>
+
+  const filtered = allProducts.filter((p) =>
     p.name.toLowerCase().includes(term) ||
     p.category.toLowerCase().includes(term)
   );
+
   renderProducts(filtered);
 });
 
@@ -177,12 +201,12 @@ function deleteProduct(product) {
 
   const productRef = ref(
     db,
-    `Personalised Surprise/products/${product.category}/${product.name}`
+    `products/${product.category}/${product.productId}`
   );
 
   remove(productRef)
-    .then(() => alert("Product deleted"))
-    .catch(() => alert("Failed to delete product"));
+    .then(() => alert("✅ Product deleted"))
+    .catch(() => alert("❌ Failed to delete product"));
 }
 
 /* ===============================

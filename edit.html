@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edit Product</title>
+
+  <link rel="stylesheet" href="edit.css" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+</head>
+<body>
+
+<header class="admin-header">
+  <div class="header-inner">
+    <div class="brand">
+      <img src="logo.jpg" alt="Logo">
+      <span>Admin Panel</span>
+    </div>
+    <div class="profile">
+      <i class="fa-solid fa-user"></i>
+    </div>
+  </div>
+</header>
+
+<main class="admin-container">
+
+  <h1>Edit Product</h1>
+  <p class="subtitle">Update product details</p>
+
+  <form class="edit-form">
+
+  <label>Product Name</label>
+  <input type="text" id="product-name" disabled />
+
+  <label>Price</label>
+  <input type="number" id="product-price" required />
+
+  <label>Description</label>
+  <textarea id="product-desc"></textarea>
+
+  <label>Badge</label>
+  <input type="text" id="product-badge" placeholder="Bestseller / New" />
+
+  <label>Delivery Time</label>
+  <input type="text" id="delivery-time" placeholder="3–5 days" />
+
+  <label style="display:flex;align-items:center;gap:8px;">
+    <input type="checkbox" id="customizable" />
+    Customizable product
+  </label>
+
+  <!-- IMAGE PREVIEW -->
+  <div class="image-preview" id="imagePreview"></div>
+
+  <!-- ADD MORE IMAGES -->
+  <label class="add-more">
+    <i class="fa-solid fa-plus"></i> Add more images
+    <input type="file" id="newImages" multiple accept="image/*" hidden />
+  </label>
+
+  <button type="button" class="save-btn">
+    <i class="fa-solid fa-save"></i> Save Changes
+  </button>
+
+</form>
+
+
+</main>
+
+<nav class="bottom-nav">
+  <button onclick="location.href='index.html'">
+    <i class="fa-solid fa-house"></i><span>Home</span>
+  </button>
+  <button class="active">
+    <i class="fa-solid fa-box"></i><span>Products</span>
+  </button>
+  <button onclick="location.href='discount.html'">
+    <i class="fa-solid fa-tag"></i><span>Discount</span>
+  </button>
+  <button onclick="location.href='order.html'">
+    <i class="fa-solid fa-cart-shopping"></i><span>Orders</span>
+  </button>
+</nav>
+
+<script type="module" src="edit.js"></script>
+</body>
+</html>
