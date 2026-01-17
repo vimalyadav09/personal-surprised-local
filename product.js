@@ -13,13 +13,14 @@ import {
    FIREBASE CONFIG
 ================================ */
 const firebaseConfig = {
-  apiKey: "AIzaSyCgeS0Qo-2K1RQ2his1lwhgSfVtIMlCfZw",
-  authDomain: "personalised-surprise.firebaseapp.com",
-  databaseURL: "https://personalised-surprise-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "personalised-surprise",
-  storageBucket: "personalised-surprise.appspot.com",
-  messagingSenderId: "847601751688",
-  appId: "1:847601751688:web:023d58ce5200eca9ff313d"
+  apiKey: "AIzaSyALT8BxBAdagSeaAjo9F2aogjaYFctIAEI",
+  authDomain: "personalized-surprises.firebaseapp.com",
+  databaseURL: "https://personalized-surprises-default-rtdb.firebaseio.com",
+  projectId: "personalized-surprises",
+  storageBucket: "personalized-surprises.firebasestorage.app",
+  messagingSenderId: "270931064294",
+  appId: "1:270931064294:web:a12ee5118035445c735227",
+  measurementId: "G-ZN01V7FZS3"
 };
 
 /* ===============================

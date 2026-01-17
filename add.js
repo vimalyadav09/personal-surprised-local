@@ -1,57 +1,39 @@
-/* =========================
-   FIREBASE IMPORTS
-========================= */
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+/* ================= FIREBASE IMPORTS ================= */
+import { initializeApp } from
+  "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
 import {
   getDatabase,
   ref,
   set,
   get
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
+} from
+  "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
-/* =========================
-   FIREBASE CONFIG
-========================= */
+/* ================= FIREBASE CONFIG ================= */
 const firebaseConfig = {
-  apiKey: "AIzaSyCgeS0Qo-2K1RQ2his1lwhgSfVtIMlCfZw",
-  authDomain: "personalised-surprise.firebaseapp.com",
-  databaseURL: "https://personalised-surprise-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "personalised-surprise",
-  storageBucket: "personalised-surprise.appspot.com",
-  messagingSenderId: "847601751688",
-  appId: "1:847601751688:web:023d58ce5200eca9ff313d"
+  apiKey: "AIzaSyALT8BxBAdagSeaAjo9F2aogjaYFctIAEI",
+  authDomain: "personalized-surprises.firebaseapp.com",
+  databaseURL: "https://personalized-surprises-default-rtdb.firebaseio.com",
+  projectId: "personalized-surprises",
+  storageBucket: "personalized-surprises.firebasestorage.app",
+  messagingSenderId: "270931064294",
+  appId: "1:270931064294:web:a12ee5118035445c735227"
 };
 
-/* =========================
-   INIT FIREBASE
-========================= */
+/* ================= INIT ================= */
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-/* =========================
-   NAVIGATION
-========================= */
-document.getElementById("home")?.addEventListener("click", () => {
-  location.href = "index.html";
-});
-
-document.getElementById("discount")?.addEventListener("click", () => {
-  location.href = "discount.html";
-});
-
-document.getElementById("order")?.addEventListener("click", () => {
-  location.href = "order.html";
-});
-
-/* =========================
-   FORM LOGIC
-========================= */
+/* ================= DOM READY ================= */
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector(".product-form");
   const submitBtn = document.querySelector(".primary-btn");
   const imageInput = document.getElementById("image-upload");
 
-  if (!form) return;
+  if (!form || !submitBtn || !imageInput) {
+    console.error("❌ Required form elements missing");
+    return;
+  }
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -60,95 +42,94 @@ document.addEventListener("DOMContentLoaded", () => {
     submitBtn.textContent = "Uploading...";
 
     try {
-      /* =========================
-         GET FORM DATA
-      ========================= */
+      /* ================= READ VALUES ================= */
       const name = getValue("product-name");
-      const description = getValue("product-desc");
+      const shortdescription = getValue("short-desc");
+      const longdescription = getValue("long-desc");
       const price = Number(getValue("product-price"));
-      const categoryRaw = getValue("product-type"); // category input
+      const categoryRaw = getValue("product-type");
       const badge = getValue("product-badge");
       const deliveryTime = getValue("delivery-time");
-      const customizable = document.getElementById("customizable")?.checked || false;
+
+      const customizable =
+        document.getElementById("customizable")?.checked === true;
+
       const occasion = getCheckedValues("occasion");
       const forWhom = getCheckedValues("forWhom");
 
+      /* ================= VALIDATION ================= */
       if (!name || !price || !categoryRaw) {
-        alert("Please fill required fields");
-        throw new Error("Missing fields");
+        alert("Please fill all required fields");
+        throw new Error("Missing required fields");
       }
 
       if (!imageInput.files.length) {
         alert("Please upload at least one image");
-        throw new Error("No images");
+        throw new Error("No images selected");
       }
 
-      /* =========================
-         CREATE SAFE IDS
-      ========================= */
-      const categoryId = categoryRaw
-        .toLowerCase()
-        .trim()
-        .replace(/\s+/g, "_")
-        .replace(/[^a-z0-9_]/g, "");
-
-      const productId = name
-        .toLowerCase()
-        .trim()
-        .replace(/\s+/g, "_")
-        .replace(/[^a-z0-9_]/g, "");
+      /* ================= SAFE IDS ================= */
+      const categoryId = toSafeId(categoryRaw);
+      const productId = toSafeId(name);
 
       const productRef = ref(db, `products/${categoryId}/${productId}`);
 
-      /* =========================
-         PREVENT DUPLICATE PRODUCT
-      ========================= */
+      /* ================= DUPLICATE CHECK ================= */
       const existing = await get(productRef);
       if (existing.exists()) {
-        alert("Product already exists in this category!");
+        alert("Product already exists in this category");
         throw new Error("Duplicate product");
       }
 
-      /* =========================
-         IMAGE → BASE64
-      ========================= */
+      /* ================= IMAGE RULES ================= */
+      const MAX_IMAGES = 3;
+      const MAX_SIZE_MB = 1;
+
+      if (imageInput.files.length > MAX_IMAGES) {
+        alert("Maximum 3 images allowed");
+        throw new Error("Too many images");
+      }
+
       const images = [];
+
       for (const file of imageInput.files) {
-        const base64 = await toBase64(file);
+        if (file.size > MAX_SIZE_MB * 1024 * 1024) {
+          alert("Each image must be under 1MB");
+          throw new Error("Image too large");
+        }
+
+        const base64 = await compressToBase64(file);
         images.push(base64);
       }
 
-      /* =========================
-         FINAL PRODUCT OBJECT
-      ========================= */
+      /* ================= PRODUCT OBJECT ================= */
       const product = {
         productId,
         name,
-        description,
+        shortdescription,
+        longdescription,
         price,
         category: categoryId,
         badge,
         deliveryTime,
-        customizable,
-        occasion,
-        forWhom,
+        customizable,          // ✅ FIXED & SAFE
+        occasion,              // ✅ array
+        forWhom,               // ✅ array
         images,
+        status: "active",
         createdAt: Date.now(),
-        updatedAt: Date.now(),
-        status: "active"
+        updatedAt: Date.now()
       };
 
-      /* =========================
-         SAVE TO FIREBASE
-      ========================= */
+      /* ================= SAVE ================= */
       await set(productRef, product);
 
       alert("✅ Product added successfully!");
       form.reset();
       location.href = "index.html";
 
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error("❌ Upload error:", err);
       alert("❌ Failed to add product");
     } finally {
       submitBtn.disabled = false;
@@ -157,9 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-/* =========================
-   HELPER FUNCTIONS
-========================= */
+/* ================= HELPERS ================= */
 function getValue(id) {
   return document.getElementById(id)?.value.trim() || "";
 }
@@ -170,11 +149,36 @@ function getCheckedValues(name) {
   ).map(el => el.value);
 }
 
-function toBase64(file) {
-  return new Promise((resolve, reject) => {
+function toSafeId(value) {
+  return value
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "_")
+    .replace(/[^a-z0-9_]/g, "");
+}
+
+/* ================= IMAGE COMPRESSION ================= */
+function compressToBase64(file) {
+  return new Promise((resolve) => {
     const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = reject;
+    const img = new Image();
+
+    reader.onload = e => img.src = e.target.result;
+
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+
+      const MAX_WIDTH = 800;
+      const scale = MAX_WIDTH / img.width;
+
+      canvas.width = MAX_WIDTH;
+      canvas.height = img.height * scale;
+
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      resolve(canvas.toDataURL("image/jpeg", 0.7));
+    };
+
     reader.readAsDataURL(file);
   });
 }
